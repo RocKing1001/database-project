@@ -3,6 +3,8 @@ using SomerenModel;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System;
+using SomerenDAL;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SomerenUI
 {
@@ -83,13 +85,24 @@ namespace SomerenUI
         {
             // clear the listview before filling it
             listViewStudents.Clear();
+            listViewStudents.Columns.Add("StudentID", 100);
+            listViewStudents.Columns.Add("Name", 100);
+            listViewStudents.Columns.Add("Date of birth", 150);
 
             foreach (Student student in students)
             {
-                ListViewItem li = new ListViewItem(student.Name);
-                li.Tag = student;   // link student object to listview item
-                listViewStudents.Items.Add(li);
+                ListViewItem list = new ListViewItem(student.Number.ToString());
+
+                list.SubItems.Add(student.Name.ToString());
+                list.SubItems.Add(student.BirthDate.ToString());
+
+                list.Tag = student;   // link student object to listview item
+                listViewStudents.Items.Add(list);
+
             }
+            listViewStudents.Columns[0].Width = 200;
+            listViewStudents.Columns[1].Width = 200;
+            listViewStudents.Columns[2].Width = 200;
         }
 
         private void DisplayRooms(List<Room> rooms)
@@ -129,9 +142,11 @@ namespace SomerenUI
             ShowStudentsPanel();
         }
 
+
         private void roomsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowRoomsPanel();
         }
+
     }
 }
