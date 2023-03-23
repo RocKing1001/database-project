@@ -273,12 +273,20 @@ namespace SomerenUI
                 drink.Name = drinkNameinputBox.Text;
                 drink.Stock = int.Parse(stockamoutinputtxt.Text);
                 drink.Price = decimal.Parse(priceinputtxtlbl.Text);
-                drink.IsAlcoholic = alcoholicrdiobtn.Checked;
+           
             }
             DrinkService drinkService = new DrinkService();
             try
             {
-
+                if (alcoholicrdiobtn.Checked || nonalcoholic.Checked)
+                {
+                    if (alcoholicrdiobtn.Checked)
+                        drink.IsAlcoholic = true;
+                    else
+                        drink.IsAlcoholic = false;
+                }
+                else
+                    throw new Exception("You need to select type");
                 drinkService.UpdateDrinks(drink);
             }
             catch (Exception ex)
