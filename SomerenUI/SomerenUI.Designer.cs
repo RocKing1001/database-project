@@ -64,6 +64,7 @@ namespace SomerenUI
             listView1 = new System.Windows.Forms.ListView();
             label3 = new System.Windows.Forms.Label();
             drinkpanel = new System.Windows.Forms.Panel();
+            pictureBox4 = new System.Windows.Forms.PictureBox();
             label11 = new System.Windows.Forms.Label();
             Editbtn = new System.Windows.Forms.Button();
             deletebtn = new System.Windows.Forms.Button();
@@ -87,6 +88,7 @@ namespace SomerenUI
             pnlRevenueReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             drinkpanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -96,7 +98,7 @@ namespace SomerenUI
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-            menuStrip1.Size = new System.Drawing.Size(1092, 25);
+            menuStrip1.Size = new System.Drawing.Size(1089, 25);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -393,6 +395,7 @@ namespace SomerenUI
             // 
             // drinkpanel
             // 
+            drinkpanel.Controls.Add(pictureBox4);
             drinkpanel.Controls.Add(label11);
             drinkpanel.Controls.Add(Editbtn);
             drinkpanel.Controls.Add(deletebtn);
@@ -410,6 +413,15 @@ namespace SomerenUI
             drinkpanel.Name = "drinkpanel";
             drinkpanel.Size = new System.Drawing.Size(1077, 485);
             drinkpanel.TabIndex = 13;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = (System.Drawing.Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new System.Drawing.Point(811, 0);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new System.Drawing.Size(130, 123);
+            pictureBox4.TabIndex = 13;
+            pictureBox4.TabStop = false;
             // 
             // label11
             // 
@@ -526,7 +538,7 @@ namespace SomerenUI
             listViewDrinks.FullRowSelect = true;
             listViewDrinks.Location = new System.Drawing.Point(20, 42);
             listViewDrinks.Name = "listViewDrinks";
-            listViewDrinks.Size = new System.Drawing.Size(984, 219);
+            listViewDrinks.Size = new System.Drawing.Size(779, 219);
             listViewDrinks.TabIndex = 0;
             listViewDrinks.UseCompatibleStateImageBehavior = false;
             listViewDrinks.View = System.Windows.Forms.View.Details;
@@ -536,7 +548,7 @@ namespace SomerenUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1092, 505);
+            ClientSize = new System.Drawing.Size(1089, 505);
             Controls.Add(drinkpanel);
             Controls.Add(pnlRevenueReport);
             Controls.Add(pnlRooms);
@@ -562,6 +574,7 @@ namespace SomerenUI
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             drinkpanel.ResumeLayout(false);
             drinkpanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -617,5 +630,6 @@ namespace SomerenUI
         private System.Windows.Forms.Button deletebtn;
         private System.Windows.Forms.Button addrinksbtn;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }

@@ -172,10 +172,10 @@ namespace SomerenUI
             listViewDrinks.Clear();
 
             listViewDrinks.Columns.Add("Name", 50);
-            listViewDrinks.Columns.Add("Type", 60);
-            listViewDrinks.Columns.Add("Price", 70);
-            listViewDrinks.Columns.Add("Stock", 80);
-            listViewDrinks.Columns.Add("Stock Status", 90);
+            listViewDrinks.Columns.Add("Type", 50);
+            listViewDrinks.Columns.Add("Price", 50);
+            listViewDrinks.Columns.Add("Stock", 50);
+            listViewDrinks.Columns.Add("Stock Status", 50);
 
 
             foreach (Drink drink in drinks)
@@ -191,11 +191,11 @@ namespace SomerenUI
                 listViewDrinks.Items.Add(list);
 
             }
-            listViewDrinks.Columns[0].Width = 200;
-            listViewDrinks.Columns[1].Width = 200;
-            listViewDrinks.Columns[2].Width = 200;
-            listViewDrinks.Columns[3].Width = 200;
-            listViewDrinks.Columns[4].Width = 200;
+            listViewDrinks.Columns[0].Width = 100;
+            listViewDrinks.Columns[1].Width = 100;
+            listViewDrinks.Columns[2].Width = 100;
+            listViewDrinks.Columns[3].Width = 100;
+            listViewDrinks.Columns[4].Width = 150;
 
 
 
