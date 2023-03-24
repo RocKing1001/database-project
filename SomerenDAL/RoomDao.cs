@@ -11,9 +11,9 @@ namespace SomerenDAL
 {
     public class RoomDao : BaseDao
     {
-        public List<Room> GetAllStudents()
+        public List<Room> GetAllRooms()
         {
-            string query = "SELECT * FROM [Dorm]";
+            string query = "SELECT dorm_id, max_occupants FROM [DormRoom]";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -26,8 +26,8 @@ namespace SomerenDAL
             {
                 Room room = new Room()
                 {
-                    Id = (int)dr["number"],
-                    Capacity = (int)dr["occupants"],
+                    Id = (int)dr["dorm_id"],
+                    Capacity = (int)dr["max_occupants"],
                 };
                 rooms.Add(room);
             }

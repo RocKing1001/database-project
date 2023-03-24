@@ -19,7 +19,7 @@ namespace SomerenService
 
         public List<Room> Getrooms()
         {
-            List<Room> rooms = studentdb.GetAllStudents();
+            List<Room> rooms = studentdb.GetAllRooms();
             return rooms;
         }
     }
