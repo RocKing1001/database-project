@@ -10,7 +10,7 @@ namespace SomerenDAL
     {
         public List<Student> GetAllStudents()
         {
-            string query = "SELECT id, Name, Birthdate FROM [Student] ORDER BY Name ASC";
+            string query = "SELECT uid, name, dob FROM Person JOIN Student ON Person.uid = Student.id";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
 
@@ -24,11 +24,9 @@ namespace SomerenDAL
             {
                 Student student = new Student()
                 {
-                    Number = (int)dr["id"],
-
-                    Name = dr["Name"].ToString(),
-                    BirthDate = (DateTime)dr["Birthdate"]
-
+                    Number = (int)dr["uid"],
+                    Name = (string)dr["name"],
+                    BirthDate = (DateTime)dr["dob"]
                 };
                 students.Add(student);
             }
