@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using SomerenDAL;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Linq;
 
 namespace SomerenUI
 {
@@ -13,13 +14,28 @@ namespace SomerenUI
         public SomerenUI()
         {
             InitializeComponent();
+            HidePanels();
+            pnlDashboard.Show();
+            dateTimePickerRR.CustomFormat = "dd/MM/yyyy";
+            dateTimePickerRR.Format = DateTimePickerFormat.Custom;
+            dateTimePickerRR.MaxDate = DateTime.Now;
+            dateTimePickerEnd.CustomFormat = "dd/MM/yyyy";
+            dateTimePickerEnd.Format = DateTimePickerFormat.Custom;
+            dateTimePickerEnd.MaxDate = DateTime.Now;
+        }
+
+        private void HidePanels()
+        {
+            foreach (var pnl in Controls.OfType<Panel>())
+            {
+                pnl.Hide();
+            }
         }
 
         private void ShowDashboardPanel()
         {
             // hide all other panels
-            pnlStudents.Hide();
-            pnlRooms.Hide();
+            HidePanels();
 
             // show dashboard
             pnlDashboard.Show();
@@ -28,8 +44,7 @@ namespace SomerenUI
         private void ShowStudentsPanel()
         {
             // hide all other panels
-            pnlDashboard.Hide();
-            pnlRooms.Hide();
+            HidePanels();
 
             // show students
             pnlStudents.Show();
@@ -46,11 +61,30 @@ namespace SomerenUI
             }
         }
 
+        private void ShowRevenueReportPanel()
+        {
+            // hide all other panels
+            HidePanels();
+
+            // show students
+            pnlRevenueReport.Show();
+
+            try
+            {
+                // get and display all students
+                List<RevenueReport> reports = new RevenueReportService().GetRevenueReports();
+                DisplayRevenue(reports);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while loading the reports: " + e.Message);
+            }
+        }
+
         private void ShowRoomsPanel()
         {
             // hide all other panels
-            pnlDashboard.Hide();
-            pnlStudents.Hide();
+            HidePanels();
 
             // show students
             pnlRooms.Show();
@@ -79,6 +113,30 @@ namespace SomerenUI
             RoomService roomService = new RoomService();
             List<Room> rooms = roomService.Getrooms();
             return rooms;
+        }
+
+        private void DisplayRevenue(List<RevenueReport> reports)
+        {
+
+            listRevenueReport.Clear();
+            listRevenueReport.Columns.Add("Sale ID", 100);
+            listRevenueReport.Columns.Add("Purchased by", 100);
+            listRevenueReport.Columns.Add("Drink ID", 150);
+            listRevenueReport.Columns.Add("Date", 150);
+
+            foreach (RevenueReport report in reports)
+            {
+                ListViewItem list = new ListViewItem(report.SaleId.ToString());
+
+                list.SubItems.Add(report.PurchaserId.ToString());
+                list.SubItems.Add(report.DrinkId.ToString());
+                list.SubItems.Add(report.Date.ToString());
+
+                list.Tag = report;   // link student object to listview item
+                listRevenueReport.Items.Add(list);
+
+            }
+            listRevenueReport.View = View.Details;
         }
 
         private void DisplayStudents(List<Student> students)
@@ -125,7 +183,7 @@ namespace SomerenUI
             listViewRooms.Columns[0].Width = 50;
             listViewRooms.Columns[1].Width = 50;
             listViewRooms.View = View.Details;
-                }
+        }
 
         private void dashboardToolStripMenuItem1_Click(object sender, System.EventArgs e)
         {
@@ -148,5 +206,18 @@ namespace SomerenUI
             ShowRoomsPanel();
         }
 
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ShowRevenueReportPanel();
+        }
+
+        private void revenueReportGet_Click(object sender, EventArgs e)
+        {
+            var dateStart = dateTimePickerRR.Value.ToString("yyyy-MM-dd");
+            var dateEnd = dateTimePickerEnd.Value.ToString("yyyy-MM-dd");
+            var reports = new RevenueReportService().GetRevenueReportsDated(dateStart, dateEnd);
+            DisplayRevenue(reports);
+
+        }
     }
 }
