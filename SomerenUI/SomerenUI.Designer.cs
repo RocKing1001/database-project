@@ -1,7 +1,5 @@
-namespace SomerenUI
-{
-    partial class SomerenUI
-    {
+namespace SomerenUI {
+    partial class SomerenUI {
         /// <summary>
         ///  Required designer variable.
         /// </summary>
@@ -11,10 +9,8 @@ namespace SomerenUI
         ///  Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -26,8 +22,7 @@ namespace SomerenUI
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SomerenUI));
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             dashboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,15 +44,15 @@ namespace SomerenUI
             listViewRooms = new System.Windows.Forms.ListView();
             label2 = new System.Windows.Forms.Label();
             pnlRevenueReport = new System.Windows.Forms.Panel();
+            dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
+            label5 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
             revenueReportGet = new System.Windows.Forms.Button();
             dateTimePickerRR = new System.Windows.Forms.DateTimePicker();
             listRevenueReport = new System.Windows.Forms.ListView();
             pictureBox3 = new System.Windows.Forms.PictureBox();
             listView1 = new System.Windows.Forms.ListView();
             label3 = new System.Windows.Forms.Label();
-            label4 = new System.Windows.Forms.Label();
-            label5 = new System.Windows.Forms.Label();
-            dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
@@ -245,6 +240,31 @@ namespace SomerenUI
             pnlRevenueReport.Size = new System.Drawing.Size(938, 466);
             pnlRevenueReport.TabIndex = 4;
             // 
+            // dateTimePickerEnd
+            // 
+            dateTimePickerEnd.Location = new System.Drawing.Point(59, 389);
+            dateTimePickerEnd.Name = "dateTimePickerEnd";
+            dateTimePickerEnd.Size = new System.Drawing.Size(200, 23);
+            dateTimePickerEnd.TabIndex = 8;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(20, 395);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(19, 15);
+            label5.TabIndex = 7;
+            label5.Text = "To";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(18, 364);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(35, 15);
+            label4.TabIndex = 6;
+            label4.Text = "From";
+            // 
             // revenueReportGet
             // 
             revenueReportGet.Location = new System.Drawing.Point(282, 391);
@@ -261,6 +281,7 @@ namespace SomerenUI
             dateTimePickerRR.Name = "dateTimePickerRR";
             dateTimePickerRR.Size = new System.Drawing.Size(200, 23);
             dateTimePickerRR.TabIndex = 4;
+            dateTimePickerRR.ValueChanged += dateTimePickerRR_ValueChanged;
             // 
             // listRevenueReport
             // 
@@ -296,31 +317,6 @@ namespace SomerenUI
             label3.Size = new System.Drawing.Size(183, 32);
             label3.TabIndex = 0;
             label3.Text = "Revenue Report";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(18, 364);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(35, 15);
-            label4.TabIndex = 6;
-            label4.Text = "From";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(20, 395);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(19, 15);
-            label5.TabIndex = 7;
-            label5.Text = "To";
-            // 
-            // dateTimePickerEnd
-            // 
-            dateTimePickerEnd.Location = new System.Drawing.Point(59, 389);
-            dateTimePickerEnd.Name = "dateTimePickerEnd";
-            dateTimePickerEnd.Size = new System.Drawing.Size(200, 23);
-            dateTimePickerEnd.TabIndex = 8;
             // 
             // SomerenUI
             // 

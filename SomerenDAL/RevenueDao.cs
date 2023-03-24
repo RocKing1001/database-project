@@ -13,14 +13,14 @@ namespace SomerenDAL
     {
         public List<RevenueReport> GetAllReports()
         {
-            string query = "SELECT * FROM [DrinksLedger]";
+            string query = $"SELECT p.name AS person_name, d.type AS drink_name, dl.date, sale_id FROM DrinksLedger dl JOIN Person p ON p.uid = dl.purchaser_id JOIN Drinks d ON d.drink_id = dl.drink_id";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
 
         public List<RevenueReport> GetDateReports(string date, string dateEnd)
         {
-            string query = $"SELECT * FROM [DrinksLedger] where date between @date and @dateEnd";
+            string query = $"SELECT p.name AS person_name, d.type AS drink_name, dl.date, sale_id FROM DrinksLedger dl JOIN Person p ON p.uid = dl.purchaser_id JOIN Drinks d ON d.drink_id = dl.drink_id WHERE date between @date and @dateEnd";
             SqlParameter[] sqlParameters = {
                 new SqlParameter("@date", date),
                 new SqlParameter("@dateEnd", dateEnd),
@@ -37,8 +37,8 @@ namespace SomerenDAL
                 RevenueReport revenue = new RevenueReport()
                 {
                     SaleId = (int)dr["sale_id"],
-                    PurchaserId = (int)dr["purchaser_id"],
-                    DrinkId = (int)dr["drink_id"],
+                    Purchaser = (string)dr["person_name"],
+                    Drink = (string)dr["drink_name"],
                     Date = ((DateTime)dr["date"]).ToString("dd-MM-yyyy"),
                 };
                 rooms.Add(revenue);
