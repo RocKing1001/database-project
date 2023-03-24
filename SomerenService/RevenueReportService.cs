@@ -27,5 +27,9 @@ namespace SomerenService
             List<RevenueReport> rooms = studentdb.GetDateReports(dateStart, dateEnd);
             return rooms;
         }
+        public (int, decimal) GetCustomers(string dateStart, string dateEnd)
+        {
+            return studentdb.GetCustomers(dateStart, dateEnd);
+        }
     }
 }

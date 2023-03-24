@@ -44,6 +44,8 @@ namespace SomerenUI {
             listViewRooms = new System.Windows.Forms.ListView();
             label2 = new System.Windows.Forms.Label();
             pnlRevenueReport = new System.Windows.Forms.Panel();
+            label7 = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
             dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
             label5 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
@@ -53,6 +55,8 @@ namespace SomerenUI {
             pictureBox3 = new System.Windows.Forms.PictureBox();
             listView1 = new System.Windows.Forms.ListView();
             label3 = new System.Windows.Forms.Label();
+            turnoverOut = new System.Windows.Forms.Label();
+            customersOut = new System.Windows.Forms.Label();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
@@ -226,6 +230,10 @@ namespace SomerenUI {
             // 
             // pnlRevenueReport
             // 
+            pnlRevenueReport.Controls.Add(customersOut);
+            pnlRevenueReport.Controls.Add(turnoverOut);
+            pnlRevenueReport.Controls.Add(label7);
+            pnlRevenueReport.Controls.Add(label6);
             pnlRevenueReport.Controls.Add(dateTimePickerEnd);
             pnlRevenueReport.Controls.Add(label5);
             pnlRevenueReport.Controls.Add(label4);
@@ -239,6 +247,24 @@ namespace SomerenUI {
             pnlRevenueReport.Name = "pnlRevenueReport";
             pnlRevenueReport.Size = new System.Drawing.Size(938, 466);
             pnlRevenueReport.TabIndex = 4;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new System.Drawing.Point(416, 395);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(92, 15);
+            label7.TabIndex = 10;
+            label7.Text = "Total Customers";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(416, 364);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(82, 15);
+            label6.TabIndex = 9;
+            label6.Text = "Total Turnover";
             // 
             // dateTimePickerEnd
             // 
@@ -318,6 +344,24 @@ namespace SomerenUI {
             label3.TabIndex = 0;
             label3.Text = "Revenue Report";
             // 
+            // turnoverOut
+            // 
+            turnoverOut.AutoSize = true;
+            turnoverOut.Location = new System.Drawing.Point(527, 364);
+            turnoverOut.Name = "turnoverOut";
+            turnoverOut.Size = new System.Drawing.Size(17, 15);
+            turnoverOut.TabIndex = 11;
+            turnoverOut.Text = "--";
+            // 
+            // customersOut
+            // 
+            customersOut.AutoSize = true;
+            customersOut.Location = new System.Drawing.Point(527, 395);
+            customersOut.Name = "customersOut";
+            customersOut.Size = new System.Drawing.Size(17, 15);
+            customersOut.TabIndex = 12;
+            customersOut.Text = "--";
+            // 
             // SomerenUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -380,5 +424,9 @@ namespace SomerenUI {
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dateTimePickerEnd;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label customersOut;
+        private System.Windows.Forms.Label turnoverOut;
     }
 }

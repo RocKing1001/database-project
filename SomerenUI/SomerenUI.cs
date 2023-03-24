@@ -115,6 +115,12 @@ namespace SomerenUI {
 
             }
             listRevenueReport.View = View.Details;
+
+            var (max_customers, cost) = new RevenueReportService().GetCustomers("1970-01-01", DateTime.Now.ToString("yyyy-MM-dd"));
+
+            turnoverOut.Text = "€" + cost.ToString(".00");
+            customersOut.Text = max_customers.ToString();
+
         }
 
         private void DisplayStudents(List<Student> students) {
@@ -134,7 +140,7 @@ namespace SomerenUI {
                 listViewStudents.Items.Add(list);
 
             }
-            
+
         }
 
         private void DisplayRooms(List<Room> rooms) {
@@ -178,6 +184,10 @@ namespace SomerenUI {
             var dateEnd = dateTimePickerEnd.Value.ToString("yyyy-MM-dd");
             var reports = new RevenueReportService().GetRevenueReportsDated(dateStart, dateEnd);
             DisplayRevenue(reports);
+            var (max_customers, cost) = new RevenueReportService().GetCustomers(dateStart, dateEnd);
+
+            turnoverOut.Text = cost.ToString();
+            customersOut.Text = max_customers.ToString();
 
         }
 
