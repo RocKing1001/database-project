@@ -495,22 +495,26 @@ namespace SomerenUI
         private void Addactivitybtn_Click(object sender, EventArgs e)
         {
 
-
             ActivityService activityService = new ActivityService();
-            
 
             if (activityType.Text == "")
             {
-                MessageBox.Show("Please add an activitytype");
+                MessageBox.Show("Please add an activity type.");
+                return;
+            }
+
+            if (dateTimeStart.Value == dateTimeStart.MinDate || dateTimeEnd.Value == dateTimeEnd.MinDate)
+            {
+                MessageBox.Show("Please select both start time and end time.");
                 return;
             }
 
 
             try
             {
-                Activity selectActivity = gattingDataOfActivity();
+                Activity selectActivity = gettingDataOfActivity();
 
-                // insert selectActivity  instance into the database
+                // Insert the new activity into the database
                 activityService.InsertActivity(selectActivity);
             }
             catch (Exception ex)
@@ -520,9 +524,10 @@ namespace SomerenUI
 
             List<Activity> activities = GetActivities();
             DisplayActivities(activities);
+
         }
 
-        private Activity gattingDataOfActivity()
+        private Activity gettingDataOfActivity()
         {
             Activity activity = new Activity(); 
             activity.Type = activityType.Text;
@@ -579,6 +584,10 @@ namespace SomerenUI
 
             Activity activity = (Activity)listViewActivity.SelectedItems[0].Tag;
             activityType.Text = activity.Type;
+            dateTimeStart.Text = activity.StartTime.ToString();
+            dateTimeEnd.Text = activity.EndTime.ToString();
+
+
 
 
 
@@ -589,26 +598,35 @@ namespace SomerenUI
             if (listViewActivity.SelectedItems.Count == 0)
                 return;
 
-            if (activityType.Text == "")
+            if (activityType.Text == "" || dateTimeStart.Value == dateTimeStart.MinDate || dateTimeEnd.Value == dateTimeEnd.MinDate)
             {
+                MessageBox.Show("Please fill in all the required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             Activity activity = (Activity)listViewActivity.SelectedItems[0].Tag;
 
-            // activity not changed? then leave
-            if (activityType.Text == activity.Type)
-                return;
-            activity.Type = activityType.Text;
-            //DateTime startTime = dateTimeStart.Value;
-            //DateTime endTime = dateTimeEnd.Value;
+            // Update the activity type if it has changed
+            if (activityType.Text != activity.Type)
+            {
+                activity.Type = activityType.Text;
+            }
 
-            dateTimeStart.CustomFormat = "MM/dd/yyyy hh:mm:ss";
-            dateTimeEnd.CustomFormat = "MM/dd/yyyy hh:mm:ss";
+            // Update the start time if it has changed
+            if (dateTimeStart.Value != activity.StartTime)
+            {
+                activity.StartTime = dateTimeStart.Value;
+            }
+
+            // Update the end time if it has changed
+            if (dateTimeEnd.Value != activity.EndTime)
+            {
+                activity.EndTime = dateTimeEnd.Value;
+            }
+
             ActivityService activityService = new ActivityService();
             try
             {
-
                 activityService.UpdateActivity(activity);
             }
             catch (Exception ex)

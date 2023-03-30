@@ -69,7 +69,7 @@ namespace SomerenDAL
 
         public void UpdateActivity(Activity activity)
         {
-            string query = "UPDATE Activity SET type = @Newtype, start_time = @NewStart_time, end_time = @NewEnd_time, WHERE activity_id = @Id";
+            string query = "UPDATE Activity SET type = @Newtype, start_time = @NewStart_time, end_time = @NewEnd_time  WHERE activity_id = @Id";
             SqlParameter[] sqlParameters =
             {
 
