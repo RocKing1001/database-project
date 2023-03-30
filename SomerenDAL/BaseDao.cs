@@ -28,7 +28,7 @@ namespace SomerenDAL
                     conn.Open();
                 }
             }
-            catch (Exception e)
+            catch (SqlException e)
             {
                 //Print.ErrorLog(e);
                 throw;

@@ -3,9 +3,11 @@ using SomerenModel;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System;
+using System.Drawing;
 using SomerenDAL;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Linq;
+using System.Globalization;
 
 namespace SomerenUI
 {
@@ -100,6 +102,26 @@ namespace SomerenUI
                 MessageBox.Show("Something went wrong while loading the Rooms: " + e.Message);
             }
         }
+        private void ShowActivityPanel()
+        {
+            HidePanels();
+            drinkpanel.Show();
+            activitypanel.Show();
+
+            try
+            {
+                // get and display all students
+                List<Activity> activities = GetActivities();
+                DisplayActivities(activities);
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while loading the Rooms: " + e.Message);
+            }
+
+
+        }
 
         private List<Student> GetStudents()
         {
@@ -113,6 +135,12 @@ namespace SomerenUI
             RoomService roomService = new RoomService();
             List<Room> rooms = roomService.Getrooms();
             return rooms;
+        }
+        private List<Activity> GetActivities()
+        {
+            ActivityService activityService = new ActivityService();
+            List<Activity> activities = activityService.GetActivities();
+            return activities;
         }
 
         private void DisplayRevenue(List<RevenueReport> reports)
@@ -200,6 +228,40 @@ namespace SomerenUI
 
 
         }
+        private void DisplayActivities(List<Activity> activities)
+        {
+            listViewActivity.Clear();
+
+
+
+            listViewActivity.Columns.Add("Activity", 50);
+            listViewActivity.Columns.Add("Start Time", 100);
+            listViewActivity.Columns.Add("End Time", 100);
+
+
+
+            foreach (Activity activity in activities)
+            {
+                ListViewItem list = new ListViewItem(activity.Type.ToString());
+
+
+                list.SubItems.Add(activity.StartTime.ToString());
+                list.SubItems.Add(activity.EndTime.ToString());
+
+                list.Tag = activity;   // link activities object to listview item
+                listViewActivity.Items.Add(list);
+
+            }
+            listViewActivity.Columns[0].Width = 150;
+            listViewActivity.Columns[1].Width = 150;
+            listViewActivity.Columns[2].Width = 150;
+
+
+
+
+
+
+        }
         private List<Drink> GetDrinks()
         {
 
@@ -211,6 +273,7 @@ namespace SomerenUI
         private void ShowDrinksPanel()
         {
             HidePanels();
+            activitypanel.Hide();
 
 
 
@@ -231,7 +294,7 @@ namespace SomerenUI
 
         private void DisplayRooms(List<Room> rooms)
         {
-            listViewRooms.Clear();
+            listViewRooms.Items.Clear();
             listViewRooms.Columns.Add("", 0); // dont ask me
             listViewRooms.Columns.Add("Number");
             listViewRooms.Columns.Add("Capacity");
@@ -424,6 +487,137 @@ namespace SomerenUI
             priceinputtxtlbl.Text = drink.Price.ToString();
         }
 
+        private void activitiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowActivityPanel();
+        }
 
+        private void Addactivitybtn_Click(object sender, EventArgs e)
+        {
+
+
+            ActivityService activityService = new ActivityService();
+            
+
+            if (activityType.Text == "")
+            {
+                MessageBox.Show("Please add an activitytype");
+                return;
+            }
+
+
+            try
+            {
+                Activity selectActivity = gattingDataOfActivity();
+
+                // insert selectActivity  instance into the database
+                activityService.InsertActivity(selectActivity);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something went wrong while adding the activities. Error message: " + ex.Message);
+            }
+
+            List<Activity> activities = GetActivities();
+            DisplayActivities(activities);
+        }
+
+        private Activity gattingDataOfActivity()
+        {
+            Activity activity = new Activity(); 
+            activity.Type = activityType.Text;
+            activity.StartTime = (DateTime)(dateTimeStart.Value);
+            activity.EndTime = (DateTime)(dateTimeEnd.Value);
+
+            return activity;
+        }
+
+        private void Deleteactivitybtn_Click(object sender, EventArgs e)
+        {
+            if (listViewActivity.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            DialogResult result = MessageBox.Show("Do you want to delete this selected activity", "Confirmation", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+
+            ActivityService activityService = new ActivityService();
+            try
+            {
+
+
+                foreach (ListViewItem listViewItem in listViewActivity.SelectedItems)
+                {
+
+                    Activity selectedActivity = (Activity)listViewItem.Tag;
+                    activityService.DeleteActivity(selectedActivity);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something went wrong while deleting the activity. Error message: " + ex.Message);
+            }
+
+            List<Activity> activities = GetActivities();
+
+            DisplayActivities(activities);
+
+        }
+
+        private void listViewActivity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (listViewActivity.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            Activity activity = (Activity)listViewActivity.SelectedItems[0].Tag;
+            activityType.Text = activity.Type;
+
+
+
+        }
+
+        private void updateActivitybtn_Click(object sender, EventArgs e)
+        {
+            if (listViewActivity.SelectedItems.Count == 0)
+                return;
+
+            if (activityType.Text == "")
+            {
+                return;
+            }
+
+            Activity activity = (Activity)listViewActivity.SelectedItems[0].Tag;
+
+            // activity not changed? then leave
+            if (activityType.Text == activity.Type)
+                return;
+            activity.Type = activityType.Text;
+            //DateTime startTime = dateTimeStart.Value;
+            //DateTime endTime = dateTimeEnd.Value;
+
+            dateTimeStart.CustomFormat = "MM/dd/yyyy hh:mm:ss";
+            dateTimeEnd.CustomFormat = "MM/dd/yyyy hh:mm:ss";
+            ActivityService activityService = new ActivityService();
+            try
+            {
+
+                activityService.UpdateActivity(activity);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something went wrong while updating the activities. Error message: " + ex.Message);
+            }
+
+            List<Activity> activities = GetActivities();
+            DisplayActivities(activities);
+        }
     }
 }
