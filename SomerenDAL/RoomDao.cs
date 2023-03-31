@@ -13,7 +13,8 @@ namespace SomerenDAL
     {
         public List<Room> GetAllRooms()
         {
-            string query = "SELECT dorm_id, max_occupants FROM [DormRoom]";
+            //string query = "SELECT dorm_id, max_occupants FROM [DormRoom]";
+            string query = "SELECT Rooms.room_id, IIF(DormRoom.dorm_id IS NOT NULL, DormRoom.max_occupants, 1) AS max_capacity, IIF(DormRoom.dorm_id IS NOT NULL, 'dorm', 'single') AS room_type FROM Rooms LEFT JOIN DormRoom ON Rooms.room_id = DormRoom.dorm_id LEFT JOIN SingleRoom ON Rooms.room_id = SingleRoom.single_room_id;";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -26,8 +27,9 @@ namespace SomerenDAL
             {
                 Room room = new Room()
                 {
-                    Id = (int)dr["dorm_id"],
-                    Capacity = (int)dr["max_occupants"],
+                    Id = (int)dr["room_id"],
+                    Capacity = (int)dr["max_capacity"],
+		    Type = (string)dr["room_type"]
                 };
                 rooms.Add(room);
             }

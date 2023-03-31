@@ -298,12 +298,14 @@ namespace SomerenUI
             listViewRooms.Columns.Add("", 0); // dont ask me
             listViewRooms.Columns.Add("Number");
             listViewRooms.Columns.Add("Capacity");
+            listViewRooms.Columns.Add("Type");
 
             foreach (Room room in rooms)
             {
                 ListViewItem li = new ListViewItem();
                 li.SubItems.Add(room.Id.ToString());
                 li.SubItems.Add(room.Capacity.ToString());
+                li.SubItems.Add(room.Type);
                 listViewRooms.Items.Add(li);
             }
             listViewRooms.View = View.Details;
