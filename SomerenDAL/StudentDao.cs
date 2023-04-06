@@ -15,6 +15,15 @@ namespace SomerenDAL
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
 
         }
+        public List<Student> GetStudentsFromActivities(string activity)
+        {
+            string query = "SELECT uid, name, dob FROM Participants P JOIN Student S on P.student_id = S.id JOIN Activity A on P.activity_id = A.activity_id JOIN Person P2 on S.id = P2.uid AND A.type = @activity";
+            SqlParameter[] sqlParameters = {
+                new SqlParameter("@activity", activity),
+            };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+
+        }
 
         private List<Student> ReadTables(DataTable dataTable)
         {
@@ -22,6 +31,7 @@ namespace SomerenDAL
 
             foreach (DataRow dr in dataTable.Rows)
             {
+                Console.WriteLine(dr["uid"]);
                 Student student = new Student()
                 {
                     Number = (int)dr["uid"],
