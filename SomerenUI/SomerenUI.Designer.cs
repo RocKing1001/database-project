@@ -89,6 +89,11 @@ namespace SomerenUI {
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             participantsPanel = new System.Windows.Forms.Panel();
+            label12 = new System.Windows.Forms.Label();
+            studentListBox = new System.Windows.Forms.ComboBox();
+            addStudPartBtn = new System.Windows.Forms.Button();
+            delStuBtn = new System.Windows.Forms.Button();
+            nonParticipantsBtn = new System.Windows.Forms.Button();
             studentFromActivityBtn = new System.Windows.Forms.Button();
             activitiesBox = new System.Windows.Forms.ComboBox();
             participantsList = new System.Windows.Forms.ListView();
@@ -701,6 +706,11 @@ namespace SomerenUI {
             // 
             // participantsPanel
             // 
+            participantsPanel.Controls.Add(label12);
+            participantsPanel.Controls.Add(studentListBox);
+            participantsPanel.Controls.Add(addStudPartBtn);
+            participantsPanel.Controls.Add(delStuBtn);
+            participantsPanel.Controls.Add(nonParticipantsBtn);
             participantsPanel.Controls.Add(studentFromActivityBtn);
             participantsPanel.Controls.Add(activitiesBox);
             participantsPanel.Controls.Add(participantsList);
@@ -711,31 +721,80 @@ namespace SomerenUI {
             participantsPanel.Size = new System.Drawing.Size(938, 466);
             participantsPanel.TabIndex = 13;
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new System.Drawing.Point(61, 404);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(103, 15);
+            label12.TabIndex = 10;
+            label12.Text = "Select a student id";
+            // 
+            // studentListBox
+            // 
+            studentListBox.FormattingEnabled = true;
+            studentListBox.Location = new System.Drawing.Point(179, 399);
+            studentListBox.Name = "studentListBox";
+            studentListBox.Size = new System.Drawing.Size(147, 23);
+            studentListBox.TabIndex = 9;
+            // 
+            // addStudPartBtn
+            // 
+            addStudPartBtn.Location = new System.Drawing.Point(340, 400);
+            addStudPartBtn.Name = "addStudPartBtn";
+            addStudPartBtn.Size = new System.Drawing.Size(147, 23);
+            addStudPartBtn.TabIndex = 8;
+            addStudPartBtn.Text = "Add student";
+            addStudPartBtn.UseVisualStyleBackColor = true;
+            addStudPartBtn.Click += addStudPartBtn_Click;
+            // 
+            // delStuBtn
+            // 
+            delStuBtn.Location = new System.Drawing.Point(707, 363);
+            delStuBtn.Name = "delStuBtn";
+            delStuBtn.Size = new System.Drawing.Size(75, 23);
+            delStuBtn.TabIndex = 7;
+            delStuBtn.Text = "Delete";
+            delStuBtn.UseVisualStyleBackColor = true;
+            delStuBtn.Click += delStuBtn_Click;
+            // 
+            // nonParticipantsBtn
+            // 
+            nonParticipantsBtn.Location = new System.Drawing.Point(340, 365);
+            nonParticipantsBtn.Name = "nonParticipantsBtn";
+            nonParticipantsBtn.Size = new System.Drawing.Size(147, 23);
+            nonParticipantsBtn.TabIndex = 6;
+            nonParticipantsBtn.Text = "Non participants";
+            nonParticipantsBtn.UseVisualStyleBackColor = true;
+            nonParticipantsBtn.Click += nonParticipantsBtn_Click;
+            // 
             // studentFromActivityBtn
             // 
-            studentFromActivityBtn.Location = new System.Drawing.Point(146, 371);
+            studentFromActivityBtn.Location = new System.Drawing.Point(179, 364);
             studentFromActivityBtn.Name = "studentFromActivityBtn";
-            studentFromActivityBtn.Size = new System.Drawing.Size(139, 23);
+            studentFromActivityBtn.Size = new System.Drawing.Size(147, 23);
             studentFromActivityBtn.TabIndex = 5;
-            studentFromActivityBtn.Text = "Search activity";
+            studentFromActivityBtn.Text = "Search participants";
             studentFromActivityBtn.UseVisualStyleBackColor = true;
             studentFromActivityBtn.Click += studentFromActivityBtn_Click;
             // 
             // activitiesBox
             // 
             activitiesBox.FormattingEnabled = true;
-            activitiesBox.Location = new System.Drawing.Point(17, 371);
+            activitiesBox.Location = new System.Drawing.Point(17, 364);
             activitiesBox.Name = "activitiesBox";
-            activitiesBox.Size = new System.Drawing.Size(121, 23);
+            activitiesBox.Size = new System.Drawing.Size(147, 23);
             activitiesBox.TabIndex = 4;
             // 
             // participantsList
             // 
+            participantsList.FullRowSelect = true;
             participantsList.Location = new System.Drawing.Point(16, 42);
             participantsList.Name = "participantsList";
             participantsList.Size = new System.Drawing.Size(766, 307);
             participantsList.TabIndex = 3;
             participantsList.UseCompatibleStateImageBehavior = false;
+            participantsList.ItemSelectionChanged += participantListSelectionChanged;
             // 
             // pictureBox6
             // 
@@ -874,5 +933,10 @@ namespace SomerenUI {
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ComboBox activitiesBox;
         private System.Windows.Forms.Button studentFromActivityBtn;
+        private System.Windows.Forms.Button nonParticipantsBtn;
+        private System.Windows.Forms.Button delStuBtn;
+        private System.Windows.Forms.Button addStudPartBtn;
+        private System.Windows.Forms.ComboBox studentListBox;
+        private System.Windows.Forms.Label label12;
     }
 }

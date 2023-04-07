@@ -22,6 +22,7 @@ namespace SomerenUI {
             dateTimePickerEnd.Format = DateTimePickerFormat.Custom;
             dateTimePickerEnd.MaxDate = DateTime.Now;
             activitiesBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            studentListBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void HidePanels() {
@@ -110,6 +111,19 @@ namespace SomerenUI {
             StudentService studentService = new StudentService();
             List<Student> students = studentService.GetStudentsWithActivities(activity);
             return students;
+        }
+        private List<Student> GetStudentsWithoutActivities() {
+            StudentService studentService = new StudentService();
+            List<Student> students = studentService.GetStudentsWithoutActivities();
+            return students;
+        }
+        private void RemoveParticipatingStudent(string id) {
+            StudentService studentService = new StudentService();
+            studentService.RemoveParticipatingStudent(id);
+        }
+        private void AddParticipatingStudent(string id, string type) {
+            StudentService studentService = new StudentService();
+            studentService.AddParticipatingStudent(id, type);
         }
 
         private List<Room> GetRooms() {
@@ -269,7 +283,13 @@ namespace SomerenUI {
                     activitiesBox.Items.Add(activity.Type);
                 }
 
-                var students = GetStudentsWithActivities("Chess");
+                var demons = GetStudentsWithoutActivities();
+                foreach (Student student in demons) {
+                    studentListBox.Items.Add(student.Number); // number coz yes
+                }
+
+                var students = GetStudentsWithoutActivities();
+                displayParticipants(students, null);
 
 
             } catch (Exception e) {
@@ -325,7 +345,6 @@ namespace SomerenUI {
 
             turnoverOut.Text = cost.ToString();
             customersOut.Text = max_customers.ToString();
-
         }
 
         private void dateTimePickerRR_ValueChanged(object sender, EventArgs e) {
@@ -569,27 +588,65 @@ namespace SomerenUI {
             ShowParticipantsPanel();
         }
 
-        private void studentFromActivityBtn_Click(object sender, EventArgs e) {
-            participantsList.Clear();
-            if (activitiesBox.Text.Length == 0) { return; }
-
-            var students = GetStudentsWithActivities(activitiesBox.Text);
+        private void displayParticipants(List<Student> students, string activity) {
             participantsList.Columns.Add("UID", 50);
             participantsList.Columns.Add("Name", 150);
             participantsList.Columns.Add("Date of birth", 150);
             participantsList.Columns.Add("Game", 70);
 
-            foreach ( var student in students ) {
+            foreach (var student in students) {
                 ListViewItem list = new ListViewItem(student.Number.ToString());
 
                 list.SubItems.Add(student.Name);
-                list.SubItems.Add(student.BirthDate.ToString());
-                list.SubItems.Add(activitiesBox.Text);
+                list.SubItems.Add(student.BirthDate.ToString("dd/MM/yyyy"));
+                list.SubItems.Add(activity);
 
+                list.Tag = student;
                 participantsList.Items.Add(list);
             }
             participantsList.View = View.Details;
+            participantsList.Columns[0].Width = 50;
+            participantsList.Columns[1].Width = 150;
+            participantsList.Columns[2].Width = 150;
+            participantsList.Columns[3].Width = 70;
 
+        }
+
+        private void studentFromActivityBtn_Click(object sender, EventArgs e) {
+            if (activitiesBox.Text.Length == 0) { return; }
+            participantsList.Clear();
+
+            var students = GetStudentsWithActivities(activitiesBox.Text);
+            displayParticipants(students, activitiesBox.Text);
+
+        }
+
+        private void nonParticipantsBtn_Click(object sender, EventArgs e) {
+            participantsList.Clear();
+
+            var students = GetStudentsWithoutActivities();
+            displayParticipants(students, null);
+        }
+
+        private void participantListSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e) {
+
+        }
+
+        private void delStuBtn_Click(object sender, EventArgs e) {
+            var selected = participantsList.SelectedItems[0];
+            if (selected.SubItems[3].Text == "") {
+                MessageBox.Show("Person does not have GAME.");
+                return;
+            }
+            participantsList.Items.Remove(selected);
+            RemoveParticipatingStudent(selected.SubItems[0].Text);
+        }
+
+        private void addStudPartBtn_Click(object sender, EventArgs e) {
+            // duh
+            if (studentListBox.Text.Length == 0 || activitiesBox.Text.Length == 0) { return; }
+
+            AddParticipatingStudent(studentListBox.Text, activitiesBox.Text);
         }
     }
 }

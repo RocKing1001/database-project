@@ -25,6 +25,30 @@ namespace SomerenDAL
 
         }
 
+        public List<Student> GetStudentsWithoutActivities()
+        {
+            string query = "SELECT uid, name, dob FROM Person P JOIN Student S ON P.uid = S.id LEFT JOIN Participants P2 ON S.id = P2.student_id WHERE P2.activity_id IS NULL;";
+            SqlParameter[] sqlParameters = {
+            };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+
+        public void RemoveParticipatingStudent(string id) {
+            string query = "DELETE FROM Participants WHERE student_id = @id";
+            SqlParameter[] sqlParameters = {
+                new SqlParameter("@id", id),
+            };
+            ExecuteEditQuery(query, sqlParameters);
+        }
+        public void AddParticipatingStudent(string id, string type) {
+            string query = "INSERT INTO Participants (student_id, activity_id) VALUES (@id, (SELECT TOP 1 activity_id FROM Activity WHERE Type = @type))";
+            SqlParameter[] sqlParameters = {
+                new SqlParameter("@id", id),
+                new SqlParameter("@type", type),
+            };
+            ExecuteEditQuery(query, sqlParameters);
+        }
+
         private List<Student> ReadTables(DataTable dataTable)
         {
             List<Student> students = new List<Student>();
